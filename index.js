@@ -17,7 +17,9 @@ const expressLayouts = require("express-ejs-layouts");
 
 const port = 7000
 
-
+app.get('/', (req, res)=>{
+  res.send("Hello world!");
+})
 
 app.use(express.json())
 // app.use(cors)
