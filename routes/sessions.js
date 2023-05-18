@@ -133,18 +133,29 @@ router.post('/booksession',fetchtrainee,async (req, res) => {
     }
   })
 
-  router.get("/getsessions",fetchtrainee,async (req, res) => {
+  router.get("/getsessions", fetchtrainee, async (req, res) => {
     try {
       const traineeId = req.traineeId;
-      const trainee = await Trainee.findById(traineeId);
-      const traineeid = trainee._id;
-      const sessions = await Session.find({ userId: traineeid });
-      res.json(sessions);
+      const sessions = await Session.find({ userId: traineeId }).populate(
+        "trainerId",
+        "name"
+      );
+      const updatedSessions = sessions.map((session) => ({
+        trainername: session.trainerId.name,
+        activity: session.activity,
+        slot: session.slot,
+        date: session.date,
+        isAvailable: session.isAvailable,
+      }));
+      res.json(updatedSessions);
     } catch (err) {
       console.error(err);
       res.status(500).send("Server error");
     }
   });
+  
+
+
 
 
 

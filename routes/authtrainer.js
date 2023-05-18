@@ -87,7 +87,7 @@ router.post('/login', [
         }
         success=true;
         const authtoken = jwt.sign(data, JWT_SECRET);
-        res.json({success,authtoken})
+        res.json({success,authtoken,message: "Login Successful"})
 
     } catch (error) {
         console.error(error.message)
