@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router()
-const fetchadmin = require('../middleware/fetchadmin');
+// const fetchadmin = require('../middleware/fetchadmin');
 const Faq = require('../models/Faq')
 const {body, validationResult} = require('express-validator');
 

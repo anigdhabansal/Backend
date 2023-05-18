@@ -3,10 +3,10 @@ const mongoose=require('mongoose');
 const { Schema } = mongoose;
 
 const FaqSchema = new Schema({
-    admin:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'admin'
-    },
+    // admin:{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref:'admin'
+    // },
   question:{
     type:String,
     required:true,
