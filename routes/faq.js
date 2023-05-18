@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router()
-// const fetchadmin = require('../middleware/fetchadmin');
+const fetchadmin = require('../middleware/fetchadmin');
 const Faq = require('../models/Faq')
 const {body, validationResult} = require('express-validator');
 
 
 // Route 1 get all the Faqs using :GET "api/Faqs/fetchallFaqs" Login required
 
-router.get('/fetchfaq', async (req, res) => {
+router.get('/fetchfaq', fetchadmin, async (req, res) => {
     try {
-        const faq = await Faq.find();
+        const faq = await Faq.find({admin:req.admin.id});
         res.json(faq)
 
     } catch (error) {
@@ -32,7 +32,7 @@ router.get('/fetchallfaq',  async (req, res) => {
 })
 
 // Route 2 Add a new Faq using POST " api/Faqs/addFaq" .Login Required
-router.post('/addfaq', [
+router.post('/addfaq', fetchadmin, [
     body('question', 'Title mut be 3 character long').isLength(
         {min: 3}
     ),
@@ -47,7 +47,7 @@ router.post('/addfaq', [
         if (! errors.isEmpty()) {
             return res.status(400).json({errors: errors.array()});
         }
-        const faq = new Faq({question, answer, tag})
+        const faq = new Faq({question, answer, tag, admin: req.admin.id})
         const savedFaq = await faq.save()
 
         res.json({message: "Faq is added."})
